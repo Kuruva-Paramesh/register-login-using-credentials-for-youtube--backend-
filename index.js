@@ -76,29 +76,35 @@ app.post("/api/users/register", async (req, res) => {
 
 // Login
 app.post("/api/users/login", async (req, res) => {
+  console.log("Login Body:", req.body); // ✅ check what's sent
+
   try {
     await connectDB();
     const { email, password } = req.body;
 
     if (!email || !password) {
+      console.log("Missing email or password");
       return res.status(400).json({ message: "Please fill all fields ❌" });
     }
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid Email ❌" });
+    if (!user) {
+      console.log("User not found");
+      return res.status(400).json({ message: "Invalid Email ❌" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid Password ❌" });
+    if (!isMatch) {
+      console.log("Password mismatch");
+      return res.status(400).json({ message: "Invalid Password ❌" });
+    }
 
+    console.log("Login success:", user.email);
     res.json({ message: "Login Successful ✅", user });
   } catch (error) {
+    console.error("Login Error:", error); // 🔹 see full error in console
     res.status(500).json({ message: "Server Error ❌" });
   }
-});
-
-// 404
-app.use((req, res) => {
-  res.status(404).json({ message: "Route Not Found ❌" });
 });
 
 // ========================
