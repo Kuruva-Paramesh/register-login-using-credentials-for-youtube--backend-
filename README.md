@@ -32,8 +32,9 @@
 ## **Future Improvements**
 
 - JWT authentication for session management  
-- Forgot password / reset password  
-- Deployment on Vercel / Heroku  
+- Forgot password / reset password 
+- Deployment on Vercel
 - User roles (admin, user)  
 -----------------------------------------------------------------------------------------------------------
-  backend link:
+  backend link:https://reg-log-umber.vercel.app/
+  frontend link:https://register-login-using-credentials-fo.vercel.app/
